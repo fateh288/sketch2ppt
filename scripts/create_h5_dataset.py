@@ -4,8 +4,8 @@ from random import shuffle
 random.seed(7)
 
 train_split = 0.8
-image_width = 32
-image_height = 32
+image_width = 64
+image_height = 64
 num_channels = 1
 shuffle_data = True
 
@@ -68,7 +68,7 @@ for i in range(len(train_addrs)):
     img = cv2.imread(addr, 0) #greyscale
     #img = np.expand_dims(img, axis=2)
     #print(img.shape)
-    img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)  # resize to (128,128)
+    img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
     print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # cv2 load images as BGR, convert it to RGB
