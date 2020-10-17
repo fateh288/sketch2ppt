@@ -73,7 +73,7 @@ for i in range(len(train_addrs)):
     print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # cv2 load images as BGR, convert it to RGB
     #print(img.shape)
-    f["train_img"][i,...] = img[None]
+    f["train_img"][i] = img
 
 print(f['train_img'].shape)
 # loop over test paths
@@ -90,6 +90,6 @@ for i in range(len(test_addrs)):
     img = np.expand_dims(img, axis=2)
     print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    f["test_img"][i, ...] = img[None]
+    f["test_img"][i] = img
 print(f['test_img'].shape)
 f.close()
