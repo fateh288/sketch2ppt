@@ -6,6 +6,7 @@ random.seed(7)
 train_split = 0.8
 image_width = 128
 image_height = 128
+num_channels = 1
 shuffle_data = True
 
 hdf5_path = 'hdf5/shapes_classification.hdf5'
@@ -36,8 +37,8 @@ test_labels = labels[int(train_split*len(labels)):]
 import numpy as np
 import h5py
 
-train_shape = (len(train_addrs), image_width, image_height)
-test_shape = (len(test_addrs), image_width, image_height)
+train_shape = (len(train_addrs), image_width, image_height,num_channels)
+test_shape = (len(test_addrs), image_width, image_height,num_channels)
 
 # open a hdf5 file and create earrays
 f = h5py.File(hdf5_path, mode='w')
@@ -65,7 +66,11 @@ for i in range(len(train_addrs)):
 
     addr = train_addrs[i]
     img = cv2.imread(addr, 0) #greyscale
+    #img = np.expand_dims(img, axis=2)
+    print(img.shape)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)  # resize to (128,128)
+    img = np.expand_dims(img, axis=2)
+    print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # cv2 load images as BGR, convert it to RGB
     #print(img.shape)
     f["train_img"][i,...] = img[None]
@@ -78,7 +83,10 @@ for i in range(len(test_addrs)):
 
     addr = test_addrs[i]
     img = cv2.imread(addr,0)
+    #img = np.expand_dims(img,axis=2)
+    print(img.shape)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
+    img = np.expand_dims(img, axis=2)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     f["test_img"][i, ...] = img[None]
 
