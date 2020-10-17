@@ -68,7 +68,7 @@ for i in range(len(train_addrs)):
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)  # resize to (128,128)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # cv2 load images as BGR, convert it to RGB
     #print(img.shape)
-    f["train_img"][i,] = img
+    f["train_img"][i,...] = img[None]
 
 # loop over test paths
 for i in range(len(test_addrs)):
@@ -80,6 +80,6 @@ for i in range(len(test_addrs)):
     img = cv2.imread(addr,0)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    f["test_img"][i, ...] = img
+    f["test_img"][i, ...] = img[None]
 
 f.close()
