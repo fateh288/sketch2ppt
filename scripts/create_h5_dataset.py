@@ -4,8 +4,8 @@ from random import shuffle
 random.seed(7)
 
 train_split = 0.8
-image_width = 128
-image_height = 128
+image_width = 32
+image_height = 32
 num_channels = 1
 shuffle_data = True
 
