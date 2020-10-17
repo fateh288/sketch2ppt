@@ -67,7 +67,7 @@ for i in range(len(train_addrs)):
     addr = train_addrs[i]
     img = cv2.imread(addr, 0) #greyscale
     #img = np.expand_dims(img, axis=2)
-    print(img.shape)
+    #print(img.shape)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)  # resize to (128,128)
     img = np.expand_dims(img, axis=2)
     print(img.shape)
@@ -75,6 +75,7 @@ for i in range(len(train_addrs)):
     #print(img.shape)
     f["train_img"][i,...] = img[None]
 
+print(f['train_img'].shape)
 # loop over test paths
 for i in range(len(test_addrs)):
 
@@ -84,11 +85,11 @@ for i in range(len(test_addrs)):
     addr = test_addrs[i]
     img = cv2.imread(addr,0)
     #img = np.expand_dims(img,axis=2)
-    print(img.shape)
+    #print(img.shape)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
     print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     f["test_img"][i, ...] = img[None]
-
+print(f['test_img'].shape)
 f.close()
