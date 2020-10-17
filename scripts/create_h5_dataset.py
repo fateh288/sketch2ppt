@@ -87,6 +87,7 @@ for i in range(len(test_addrs)):
     print(img.shape)
     img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
+    print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     f["test_img"][i, ...] = img[None]
 
