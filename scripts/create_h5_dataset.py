@@ -32,7 +32,7 @@ shuffle_data = True
 
 hdf5_path = 'hdf5/shapes_classification.hdf5'
 train_path = 'images/*.jpg'
-dict_labels = {"Arrow": 0, "Circle": 1, "Rectangle": 2, "Triangle": 3, "Line": 4}
+dict_labels = {"Arrow": 0, "Circle": 1, "Rectangle": 2, "Line": 3}
 addrs = glob.glob(train_path)
 
 labels = []
@@ -88,6 +88,7 @@ for i in range(len(train_addrs)):
     addr = train_addrs[i]
     img = cv2.imread(addr, 0) #greyscale
     img = resize_crop_pad(img,get_coord_addr(addr),image_width,image_height)
+    print("max=", np.max(img), "min=", np.min(img))
     #img = np.expand_dims(img, axis=2)
     #print(img.shape)
 
@@ -108,11 +109,12 @@ for i in range(len(test_addrs)):
     addr = test_addrs[i]
     img = cv2.imread(addr,0)
     img = resize_crop_pad(img,get_coord_addr(addr),image_width,image_height)
+    print("max=",np.max(img),"min=",np.min(img))
     #img = np.expand_dims(img,axis=2)
     #print(img.shape)
     #img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
-    print(img.shape)
+    #print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     f["test_img"][i] = img
 print(f['test_img'].shape)
