@@ -1,7 +1,26 @@
 import glob
 import random
 from random import shuffle
+
 random.seed(7)
+
+
+def get_coord_addr(addr):
+    #get coords from file name
+    base = addr.split('/')[1]
+    base = base.split('.jpg')
+    coords_str = base[0].split("_")[1:]
+    coords_int = [round(float(coord))for coord in coords_str]
+    print("addr=",addr,"coord=",coords_int)
+    return coords_int
+
+def resize_crop_pad(img,coord, req_width, req_height):
+    result = np.full((req_height,req_width), 255, dtype=np.uint8)
+    cropped = img[coord[1]:coord[3],coord[0]:coord[2]]
+    while cropped.shape[0] > req_width or cropped.shape[1] > req_height:
+        cropped = cv2.resize(cropped, (0, 0), fx=0.5, fy=0.5)
+    result[:cropped.shape[0], :cropped.shape[1]] = cropped
+    return result
 
 train_split = 0.8
 image_width = 128
@@ -66,11 +85,13 @@ for i in range(len(train_addrs)):
 
     addr = train_addrs[i]
     img = cv2.imread(addr, 0) #greyscale
+    img = resize_crop_pad(img,get_coord_addr(addr),image_width,image_height)
     #img = np.expand_dims(img, axis=2)
     #print(img.shape)
-    img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
+
+    #img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
-    print(img.shape)
+    print("final image shape = ",img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # cv2 load images as BGR, convert it to RGB
     #print(img.shape)
     f["train_img"][i] = img
@@ -84,9 +105,10 @@ for i in range(len(test_addrs)):
 
     addr = test_addrs[i]
     img = cv2.imread(addr,0)
+    img = resize_crop_pad(img,get_coord_addr(addr),image_width,image_height)
     #img = np.expand_dims(img,axis=2)
     #print(img.shape)
-    img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
+    #img = cv2.resize(img, (image_width, image_height), interpolation=cv2.INTER_CUBIC)
     img = np.expand_dims(img, axis=2)
     print(img.shape)
     #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
