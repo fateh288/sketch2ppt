@@ -19,7 +19,9 @@ def resize_crop_pad(img,coord, req_width, req_height):
     cropped = img[coord[1]:coord[3],coord[0]:coord[2]]
     while cropped.shape[0] > req_width or cropped.shape[1] > req_height:
         cropped = cv2.resize(cropped, (0, 0), fx=0.5, fy=0.5)
-    result[:cropped.shape[0], :cropped.shape[1]] = cropped
+    x = int((result.shape[1] - cropped.shape[1])/2)
+    y = int((result.shape[0] - cropped.shape[0])/2)
+    result[y:cropped.shape[0]+y, x:cropped.shape[1]+x] = cropped
     return result
 
 train_split = 0.8
