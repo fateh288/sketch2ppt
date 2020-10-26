@@ -32,7 +32,7 @@ shuffle_data = True
 
 hdf5_path = 'hdf5/shapes_classification.hdf5'
 train_path = 'images/*.jpg'
-dict_labels = {"Arrow": 0, "Circle": 1, "Rectangle": 2, "Line": 3}
+dict_labels = {"Arrow": 0, "Circle": 1, "Rectangle": 2git }
 addrs = glob.glob(train_path)
 
 labels = []
